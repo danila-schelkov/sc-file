@@ -45,7 +45,7 @@ public final class ScFilePacker {
                     dos.writeByte((data.length >> (8 * i)) & 0xFF);
                 }
 
-                dos.write(Lzma.compressLzma(data));
+                dos.write(Lzma.compress(data));
             }
             case 2, 3, 5 -> dos.write(Zstandard.compress(data));
             default ->

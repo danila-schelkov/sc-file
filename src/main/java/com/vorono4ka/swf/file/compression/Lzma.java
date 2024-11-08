@@ -12,7 +12,7 @@ public final class Lzma {
     private Lzma() {
     }
 
-    public static byte[] decompressLzma(DataInputStream stream) throws IOException {
+    public static byte[] decompress(DataInputStream stream) throws IOException {
         Decoder decoder = new Decoder();
 
         byte[] decoderProperties = stream.readNBytes(5);
@@ -29,7 +29,7 @@ public final class Lzma {
         return outputArray.toByteArray();
     }
 
-    public static byte[] compressLzma(byte[] data) throws IOException {
+    public static byte[] compress(byte[] data) throws IOException {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);
         ByteArrayOutputStream outputArray = new ByteArrayOutputStream();
 

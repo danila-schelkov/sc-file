@@ -14,6 +14,7 @@ import java.io.IOException;
 public final class ScFileUnpacker {
     private static final int SC_MAGIC = 0x5343;
     private static final int FIVE_LITTLE_ENDIAN = swapEndian32(5);
+    private static final byte[] START_SECTION_BYTES = {'S', 'T', 'A', 'R', 'T'};
 
     private ScFileUnpacker() {
     }
@@ -50,9 +51,16 @@ public final class ScFileUnpacker {
         byte[] decompressed;
 
         switch (version) {
-            case 1 -> decompressed = Lzma.decompressLzma(stream);
-            case 2, 3, 5 ->
-                decompressed = Zstandard.decompressZstd(compressedData, compressedData.length - stream.available());
+            case 1 -> decompressed = Lzma.decompress(stream);
+            case 2, 3, 5 -> {
+                int offset = compressedData.length - stream.available();
+                int startSectionOffset = indexOf(compressedData, START_SECTION_BYTES);
+                if (startSectionOffset != -1) {
+                    decompressed = Zstandard.decompress(compressedData, offset, startSectionOffset - offset);
+                } else {
+                    decompressed = Zstandard.decompress(compressedData, offset);
+                }
+            }
             default ->
                 throw new UnknownFileVersionException("Unknown file version: " + version);
         }
@@ -101,5 +109,23 @@ public final class ScFileUnpacker {
 
     private static int swapEndian32(int metadataRootTableOffset) {
         return (metadataRootTableOffset >> 24) & 0xFF | (((metadataRootTableOffset >> 16) & 0xFF) << 8) | (((metadataRootTableOffset >> 8) & 0xFF) << 16) | ((metadataRootTableOffset & 0xFF) << 24);
+    }
+
+    private static int indexOf(byte[] array, byte[] bytesToFind) {
+        for (int i = 0; i < array.length; i++) {
+            boolean found = true;
+            for (int j = 0; j < bytesToFind.length; j++) {
+                if (array[i+j] != bytesToFind[j]) {
+                    found = false;
+                    break;
+                }
+            }
+
+            if (found) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
