@@ -1,11 +1,11 @@
-package com.vorono4ka.swf.file;
+package dev.donutquine.swf.file;
 
-import com.vorono4ka.swf.file.compression.Lzma;
-import com.vorono4ka.swf.file.compression.Zstandard;
-import com.vorono4ka.swf.file.exceptions.FileVerificationException;
-import com.vorono4ka.swf.file.exceptions.HashVerificationException;
-import com.vorono4ka.swf.file.exceptions.UnknownFileVersionException;
-import com.vorono4ka.swf.file.exceptions.WrongFileMagicException;
+import dev.donutquine.swf.file.compression.Lzma;
+import dev.donutquine.swf.file.compression.Zstandard;
+import dev.donutquine.swf.file.exceptions.FileVerificationException;
+import dev.donutquine.swf.file.exceptions.HashVerificationException;
+import dev.donutquine.swf.file.exceptions.UnknownFileVersionException;
+import dev.donutquine.swf.file.exceptions.WrongFileMagicException;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;

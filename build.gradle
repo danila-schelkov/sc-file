@@ -3,7 +3,7 @@ plugins {
     id("maven-publish")
 }
 
-group = 'com.vorono4ka'
+group = 'dev.donutquine'
 version = project.version
 
 repositories {
@@ -14,7 +14,7 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.13.3')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
-    implementation("com.github.luben:zstd-jni:1.5.7-4")
+    implementation("com.github.luben:zstd-jni:$project.zstd_version")
 }
 
 test {

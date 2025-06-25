@@ -1,4 +1,4 @@
-package com.vorono4ka.swf.file.compression;
+package dev.donutquine.swf.file.compression;
 
 import org.sevenzip.compression.LZMA.Decoder;
 import org.sevenzip.compression.LZMA.Encoder;

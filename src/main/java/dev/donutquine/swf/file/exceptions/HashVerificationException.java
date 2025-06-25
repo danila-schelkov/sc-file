@@ -1,4 +1,4 @@
-package com.vorono4ka.swf.file.exceptions;
+package dev.donutquine.swf.file.exceptions;
 
 public class HashVerificationException extends FileVerificationException {
     public HashVerificationException(String message) {

@@ -1,6 +1,6 @@
-package com.vorono4ka.swf.file;
+package dev.donutquine.swf.file;
 
-import com.vorono4ka.swf.file.exceptions.UnknownFileVersionException;
+import dev.donutquine.swf.file.exceptions.UnknownFileVersionException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

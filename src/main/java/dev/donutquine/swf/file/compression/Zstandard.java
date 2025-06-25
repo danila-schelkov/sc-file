@@ -1,4 +1,4 @@
-package com.vorono4ka.swf.file.compression;
+package dev.donutquine.swf.file.compression;
 
 import com.github.luben.zstd.Zstd;
 

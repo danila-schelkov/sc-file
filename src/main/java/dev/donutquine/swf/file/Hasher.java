@@ -1,4 +1,4 @@
-package com.vorono4ka.swf.file;
+package dev.donutquine.swf.file;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -1,8 +1,8 @@
-package com.vorono4ka.swf.file;
+package dev.donutquine.swf.file;
 
-import com.vorono4ka.swf.file.compression.Lzma;
-import com.vorono4ka.swf.file.compression.Zstandard;
-import com.vorono4ka.swf.file.exceptions.UnknownFileVersionException;
+import dev.donutquine.swf.file.compression.Lzma;
+import dev.donutquine.swf.file.compression.Zstandard;
+import dev.donutquine.swf.file.exceptions.UnknownFileVersionException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
