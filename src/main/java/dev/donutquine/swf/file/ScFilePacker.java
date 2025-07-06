@@ -9,8 +9,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public final class ScFilePacker {
-    private static final byte[] LZMA_PROPERTIES = new byte[]{0x5d, 0x00, 0x00, 0x04, 0x00};
-
     private static final int SC_MAGIC = 0x5343;
 
     private ScFilePacker() {
@@ -22,32 +20,35 @@ public final class ScFilePacker {
 
         dos.writeShort(SC_MAGIC);
 
-        dos.writeInt(version);
-        if (version == 4) {
-            version = 1;
+        if (version < 5) {
             dos.writeInt(version);
+            if (version == 4) {
+                version = 1;
+                dos.writeInt(version);
+            }
+        } else {
+            dos.writeInt(Integer.reverseBytes(version));
         }
 
         if (version < 5) {
-            byte[] hash = Hasher.createHash(data);
+            byte[] hash = Hasher.calculateHash(data);
 
             dos.writeInt(hash.length);
             dos.write(hash);
         } else {
+            if (version == 6) {
+                dos.writeShort(0);
+            }
+
             dos.writeInt(metadata.length);
             dos.write(metadata);
         }
 
         switch (version) {
             case 1 -> {
-                dos.write(LZMA_PROPERTIES);
-                for (int i = 0; i < 4; i++) {
-                    dos.writeByte((data.length >> (8 * i)) & 0xFF);
-                }
-
                 dos.write(Lzma.compress(data));
             }
-            case 2, 3, 5 -> dos.write(Zstandard.compress(data));
+            case 2, 3, 5, 6 -> dos.write(Zstandard.compress(data));
             default ->
                 throw new UnknownFileVersionException("Unknown file version: " + version);
         }

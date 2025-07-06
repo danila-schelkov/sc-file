@@ -19,10 +19,10 @@ public final class Hasher {
     }
 
     public static boolean verifyHash(byte[] data, byte[] hash) {
-        return Arrays.equals(createHash(data), hash);
+        return Arrays.equals(calculateHash(data), hash);
     }
 
-    public static byte[] createHash(byte[] data) {
+    public static byte[] calculateHash(byte[] data) {
         return MD5.digest(data);
     }
 }

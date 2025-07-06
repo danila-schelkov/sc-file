@@ -9,6 +9,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 public final class Lzma {
+    private static final int UNCOMPRESSED_SIZE_LENGTH = 4;
+
     private Lzma() {
     }
 
@@ -19,7 +21,7 @@ public final class Lzma {
         decoder.setDecoderProperties(decoderProperties);
 
         int outSize = 0;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < UNCOMPRESSED_SIZE_LENGTH; i++) {
             outSize |= (stream.read() & 0xFF) << (i * 8);
         }
 
@@ -34,6 +36,10 @@ public final class Lzma {
         ByteArrayOutputStream outputArray = new ByteArrayOutputStream();
 
         Encoder encoder = new Encoder();
+        encoder.writeCoderProperties(outputArray);
+        for (int i = 0; i < UNCOMPRESSED_SIZE_LENGTH; i++) {
+            outputArray.write((data.length >> (8 * i)) & 0xFF);
+        }
         encoder.code(byteArrayInputStream, outputArray, null);
 
         return outputArray.toByteArray();
