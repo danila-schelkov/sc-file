@@ -25,6 +25,10 @@ test {
     useJUnitPlatform()
 }
 
+tasks.withType(JavaCompile) {
+    options.release = 17
+}
+
 tasks.register("sourcesJar", Jar) {
     archiveClassifier.set("sources")
     from(sourceSets.main.allSource)     
