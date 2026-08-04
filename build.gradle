@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:6.0.3')
+    testImplementation platform("org.junit:junit-bom:$project.junit_version")
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
     implementation("com.github.luben:zstd-jni:$project.zstd_version")
